@@ -10,12 +10,13 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "var(--font-noto)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
       },
       colors: {
         accent: "#E63946",
-        card: "#F8F8F8",
-        muted: "#9CA3AF",
-        border: "#E5E7EB",
+        card: "#EDEAE3",
+        muted: "#888888",
+        border: "#E0DDD6",
       },
     },
   },

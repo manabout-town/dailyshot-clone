@@ -16,42 +16,41 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isSoldOut = product.stock === 0;
 
   return (
-    <motion.div
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.2 }}
-    >
+    <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
       <Link href={`/products/${product.id}`} className="block group">
-        {/* Image */}
-        <div className="relative aspect-square w-full rounded-lg bg-[#F8F8F8] overflow-hidden mb-3">
-          <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-sm">
-            {/* Placeholder — no real images in static data */}
-            <span className="font-medium">{product.scale ?? "Figure"}</span>
-          </div>
+        {/* Image placeholder — scale as graphic element */}
+        <div className="relative aspect-square w-full rounded-lg bg-[#EDEAE3] overflow-hidden mb-3 flex items-center justify-center">
+          {product.scale && (
+            <span
+              className="font-display font-bold text-[#D0CCC4] select-none leading-none"
+              style={{ fontSize: "clamp(20px, 3.5vw, 44px)" }}
+            >
+              {product.scale}
+            </span>
+          )}
 
-          {/* Badges overlay */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {isSoldOut && <Badge variant="soldout">품절</Badge>}
-            {!isSoldOut && hasDiscount && (
-              <Badge variant="discount">-{discountRate}%</Badge>
-            )}
+            {!isSoldOut && hasDiscount && <Badge variant="discount">-{discountRate}%</Badge>}
           </div>
 
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-200" />
+          <div className="absolute inset-0 ring-0 group-hover:ring-2 ring-[#1A1A1A] rounded-lg transition-all duration-200" />
         </div>
 
         {/* Info */}
-        <div className="flex flex-col gap-1">
-          <p className="text-xs text-[#9CA3AF]">{product.brand?.name_ko ?? product.brand?.name}</p>
-          <p className="text-sm font-medium text-[#0A0A0A] line-clamp-2 leading-snug">
+        <div className="flex flex-col gap-0.5">
+          <p className="text-[10px] font-bold tracking-widest uppercase text-[#888]">
+            {product.brand?.name_ko ?? product.brand?.name}
+          </p>
+          <p className="text-sm font-medium text-[#1A1A1A] line-clamp-2 leading-snug mt-0.5">
             {product.name_ko ?? product.name}
           </p>
-          <div className="flex items-center gap-2 mt-0.5">
-            <span className={`text-sm font-bold tabular-nums ${isSoldOut ? "text-[#9CA3AF]" : "text-[#0A0A0A]"}`}>
+          <div className="flex items-center gap-2 mt-1">
+            <span className={`text-sm font-bold tabular-nums ${isSoldOut ? "text-[#888]" : "text-[#1A1A1A]"}`}>
               ₩{formatKRW(product.price)}
             </span>
             {hasDiscount && (
-              <span className="text-xs text-[#9CA3AF] line-through tabular-nums">
+              <span className="text-xs text-[#888] line-through tabular-nums">
                 ₩{formatKRW(product.original_price!)}
               </span>
             )}

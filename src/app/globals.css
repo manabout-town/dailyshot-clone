@@ -4,12 +4,12 @@
 
 @layer base {
   :root {
-    --color-bg: #FFFFFF;
-    --color-text: #0A0A0A;
+    --color-bg: #F7F6F3;
+    --color-text: #1A1A1A;
     --color-accent: #E63946;
-    --color-card: #F8F8F8;
-    --color-border: #E5E7EB;
-    --color-muted: #9CA3AF;
+    --color-card: #EDEAE3;
+    --color-border: #E0DDD6;
+    --color-muted: #888888;
   }
 
   * {
@@ -19,11 +19,7 @@
   body {
     background-color: var(--color-bg);
     color: var(--color-text);
-    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    font-family: var(--font-inter), var(--font-noto), sans-serif;
     -webkit-font-smoothing: antialiased;
-  }
-
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
   }
 }

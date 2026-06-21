@@ -1,5 +1,6 @@
 import type { Product } from "@/types/database";
 import ProductGrid from "@/components/product/ProductGrid";
+import Link from "next/link";
 
 type FeaturedProductsProps = {
   products: Product[];
@@ -7,15 +8,15 @@ type FeaturedProductsProps = {
 
 export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
+    <section className="max-w-7xl mx-auto px-4 py-10">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold">추천 상품</h2>
-        <a
-          href="/products"
-          className="text-sm text-[#9CA3AF] hover:text-[#0A0A0A] transition-colors"
-        >
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-5 bg-[#E63946] rounded-full" />
+          <h2 className="text-lg font-bold tracking-tight">추천 상품</h2>
+        </div>
+        <Link href="/products" className="text-xs text-[#888] hover:text-[#1A1A1A] transition-colors tracking-wide">
           전체보기 →
-        </a>
+        </Link>
       </div>
       <ProductGrid products={products} />
     </section>

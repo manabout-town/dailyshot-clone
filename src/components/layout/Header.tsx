@@ -18,63 +18,63 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-[#E5E7EB]">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-4">
-        <Link href="/" className="text-xl font-bold tracking-tight shrink-0">
-          FIGURE<span className="text-[#E63946]">SHOP</span>
+    <header className="sticky top-0 z-50 bg-[#F7F6F3]/95 backdrop-blur-sm border-b border-[#E0DDD6]">
+      <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
+        <Link href="/" className="font-display text-xl font-bold tracking-tight shrink-0">
+          FS<span className="text-[#E63946]">.</span>
         </Link>
 
-        <form onSubmit={handleSearch} className="flex-1 max-w-xl hidden sm:flex">
+        <form onSubmit={handleSearch} className="flex-1 max-w-sm hidden sm:flex ml-6">
           <div className="relative w-full">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="피규어 검색..."
-              className="w-full pl-4 pr-10 py-2 rounded-full border border-[#E5E7EB] text-sm focus:outline-none focus:border-[#0A0A0A]"
+              placeholder="브랜드, 시리즈, 상품명..."
+              className="w-full pl-3 pr-9 py-1.5 bg-[#EDEAE3] rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#1A1A1A] placeholder:text-[#888] border-0"
             />
-            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#0A0A0A]">
-              <Search size={16} />
+            <button type="submit" className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#888] hover:text-[#1A1A1A]">
+              <Search size={14} />
             </button>
           </div>
         </form>
 
-        <nav className="hidden sm:flex items-center gap-6 text-sm font-medium ml-auto">
-          <Link href="/products" className="hover:text-[#E63946] transition-colors">전체 상품</Link>
-          <Link href="/products?category=anime" className="hover:text-[#E63946] transition-colors">애니메이션</Link>
-          <Link href="/products?category=game" className="hover:text-[#E63946] transition-colors">게임</Link>
-          <Link href="/products?category=movie" className="hover:text-[#E63946] transition-colors">영화</Link>
+        <nav className="hidden sm:flex items-center gap-5 text-sm ml-auto text-[#888]">
+          <Link href="/products" className="hover:text-[#1A1A1A] transition-colors">전체</Link>
+          <Link href="/products?category=anime" className="hover:text-[#1A1A1A] transition-colors">애니</Link>
+          <Link href="/products?category=game" className="hover:text-[#1A1A1A] transition-colors">게임</Link>
+          <Link href="/products?category=movie" className="hover:text-[#1A1A1A] transition-colors">영화</Link>
         </nav>
 
         <button
-          className="sm:hidden ml-auto"
+          className="sm:hidden ml-auto text-[#1A1A1A]"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="메뉴"
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {menuOpen && (
-        <div className="sm:hidden border-t border-[#E5E7EB] px-4 py-3 flex flex-col gap-3 text-sm font-medium">
-          <form onSubmit={handleSearch} className="flex">
+        <div className="sm:hidden border-t border-[#E0DDD6] bg-[#F7F6F3] px-4 py-3 flex flex-col gap-3 text-sm">
+          <form onSubmit={handleSearch}>
             <div className="relative w-full">
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="피규어 검색..."
-                className="w-full pl-4 pr-10 py-2 rounded-full border border-[#E5E7EB] text-sm focus:outline-none focus:border-[#0A0A0A]"
+                placeholder="브랜드, 시리즈, 상품명..."
+                className="w-full pl-3 pr-9 py-1.5 bg-[#EDEAE3] rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#1A1A1A] placeholder:text-[#888]"
               />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]">
-                <Search size={16} />
+              <button type="submit" className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#888]">
+                <Search size={14} />
               </button>
             </div>
           </form>
-          <Link href="/products" onClick={() => setMenuOpen(false)}>전체 상품</Link>
-          <Link href="/products?category=anime" onClick={() => setMenuOpen(false)}>애니메이션</Link>
-          <Link href="/products?category=game" onClick={() => setMenuOpen(false)}>게임</Link>
-          <Link href="/products?category=movie" onClick={() => setMenuOpen(false)}>영화</Link>
+          <Link href="/products" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">전체 상품</Link>
+          <Link href="/products?category=anime" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">애니메이션</Link>
+          <Link href="/products?category=game" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">게임</Link>
+          <Link href="/products?category=movie" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">영화</Link>
         </div>
       )}
     </header>

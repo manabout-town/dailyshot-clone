@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { Category } from "@/types/database";
 
-const categoryEmoji: Record<string, string> = {
-  anime: "🎌",
-  game: "🎮",
-  sports: "⚽",
-  movie: "🎬",
+const categoryDesc: Record<string, string> = {
+  anime: "TVA · OVA · 극장판",
+  game: "RPG · 액션 · 격투",
+  sports: "스포츠 · 아이돌",
+  movie: "마블 · DC · 실사",
 };
 
 type CategoryGridProps = {
@@ -14,17 +14,23 @@ type CategoryGridProps = {
 
 export default function CategoryGrid({ categories }: CategoryGridProps) {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12">
-      <h2 className="text-2xl font-bold mb-6">카테고리</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+    <section className="max-w-7xl mx-auto px-4 py-10">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#E0DDD6] border border-[#E0DDD6] rounded-xl overflow-hidden">
         {categories.map((cat) => (
           <Link
             key={cat.id}
             href={`/products?category=${cat.slug}`}
-            className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-[#F8F8F8] hover:bg-[#0A0A0A] hover:text-white transition-colors duration-200 group"
+            className="group bg-[#F7F6F3] hover:bg-[#1A1A1A] transition-colors duration-200 p-6 flex flex-col gap-2"
           >
-            <span className="text-3xl">{categoryEmoji[cat.slug] ?? "📦"}</span>
-            <span className="text-sm font-semibold">{cat.name}</span>
+            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#888] group-hover:text-[#E63946] transition-colors">
+              {cat.slug}
+            </span>
+            <span className="text-base font-bold text-[#1A1A1A] group-hover:text-white transition-colors">
+              {cat.name}
+            </span>
+            <span className="text-xs text-[#888] group-hover:text-[#555] transition-colors">
+              {categoryDesc[cat.slug] ?? ""}
+            </span>
           </Link>
         ))}
       </div>
