@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#F7F6F3]/95 backdrop-blur-sm border-b border-[#E0DDD6]">
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
-        <Link href="/" className="font-display text-xl font-bold tracking-tight shrink-0">
+        <Link href="/shop" className="font-display text-xl font-bold tracking-tight shrink-0">
           FS<span className="text-[#E63946]">.</span>
         </Link>
 
@@ -50,7 +50,7 @@ export default function Header() {
           <CartIcon />
           {session ? (
             <button
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={() => signOut({ callbackUrl: "/shop" })}
               className="text-[#E63946] hover:text-[#1A1A1A] transition-colors text-sm"
             >
               로그아웃
@@ -95,7 +95,7 @@ export default function Header() {
           <Link href="/products?category=game" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">게임</Link>
           <Link href="/products?category=movie" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">영화</Link>
           {session ? (
-            <button onClick={() => signOut({ callbackUrl: "/" })} className="text-[#E63946] text-left text-sm">
+            <button onClick={() => signOut({ callbackUrl: "/shop" })} className="text-[#E63946] text-left text-sm">
               로그아웃
             </button>
           ) : (
