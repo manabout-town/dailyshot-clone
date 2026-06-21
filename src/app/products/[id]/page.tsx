@@ -26,7 +26,7 @@ export default function ProductDetailPage({ params }: Props) {
 
   return (
     <>
-      <ProductDetail product={product} />
+      <ProductDetail product={product} imageUrl={product.image_url} />
       {related.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 pb-12">
           <h2 className="text-xl font-bold mb-4">연관 상품</h2>

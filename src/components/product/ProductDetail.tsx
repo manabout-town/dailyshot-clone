@@ -6,9 +6,10 @@ import ImageGallery from "./ImageGallery";
 
 type ProductDetailProps = {
   product: Product;
+  imageUrl?: string | null;
 };
 
-export default function ProductDetail({ product }: ProductDetailProps) {
+export default function ProductDetail({ product, imageUrl }: ProductDetailProps) {
   const hasDiscount =
     product.original_price !== null && product.original_price > product.price;
   const discountRate = hasDiscount
@@ -19,7 +20,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <ImageGallery productName={product.name_ko ?? product.name} scale={product.scale} />
+        <ImageGallery productName={product.name_ko ?? product.name} scale={product.scale} imageUrl={imageUrl} />
 
         <div className="flex flex-col gap-4">
           {/* Badges */}

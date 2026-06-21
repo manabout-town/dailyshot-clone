@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Product } from "@/types/database";
 import { formatKRW, getDiscountRate } from "@/lib/utils";
@@ -18,23 +19,27 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.18 }}>
       <Link href={`/products/${product.id}`} className="block group">
-        {/* Image placeholder — scale as graphic element */}
-        <div className="relative aspect-square w-full rounded-lg bg-[#EDEAE3] overflow-hidden mb-3 flex items-center justify-center">
-          {product.scale && (
-            <span
-              className="font-display font-bold text-[#D0CCC4] select-none leading-none"
-              style={{ fontSize: "clamp(20px, 3.5vw, 44px)" }}
-            >
-              {product.scale}
-            </span>
+        <div className="relative aspect-square w-full rounded-lg bg-[#EDEAE3] overflow-hidden mb-3">
+          {product.image_url ? (
+            <Image
+              src={product.image_url}
+              alt={product.name_ko ?? product.name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="font-display font-bold text-[#D0CCC4] text-2xl">{product.scale ?? "F"}</span>
+            </div>
           )}
 
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
+          <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
             {isSoldOut && <Badge variant="soldout">품절</Badge>}
             {!isSoldOut && hasDiscount && <Badge variant="discount">-{discountRate}%</Badge>}
           </div>
 
-          <div className="absolute inset-0 ring-0 group-hover:ring-2 ring-[#1A1A1A] rounded-lg transition-all duration-200" />
+          <div className="absolute inset-0 ring-0 group-hover:ring-2 ring-[#1A1A1A] rounded-lg transition-all duration-200 z-10" />
         </div>
 
         {/* Info */}

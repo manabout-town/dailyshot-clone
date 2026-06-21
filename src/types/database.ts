@@ -41,6 +41,7 @@ export type Product = {
   is_active: boolean;
   is_featured: boolean;
   release_date: string | null;
+  image_url?: string | null;
   brand?: Brand;
   series?: Series | null;
   category?: Category;
