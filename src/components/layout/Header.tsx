@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search, Menu, X } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
+import CartIcon from "@/components/cart/CartIcon";
 
 export default function Header() {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function Header() {
           <Link href="/products?category=anime" className="hover:text-[#1A1A1A] transition-colors">애니</Link>
           <Link href="/products?category=game" className="hover:text-[#1A1A1A] transition-colors">게임</Link>
           <Link href="/products?category=movie" className="hover:text-[#1A1A1A] transition-colors">영화</Link>
+          <CartIcon />
           {session ? (
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
@@ -60,13 +62,16 @@ export default function Header() {
           )}
         </nav>
 
-        <button
-          className="sm:hidden ml-auto text-[#1A1A1A]"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="메뉴"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="sm:hidden ml-auto flex items-center gap-3">
+          <CartIcon />
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="메뉴"
+            className="text-[#1A1A1A]"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

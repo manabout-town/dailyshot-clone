@@ -1,8 +1,8 @@
 import type { Product } from "@/types/database";
 import { formatKRW, getDiscountRate } from "@/lib/utils";
 import Badge from "@/components/ui/Badge";
-import Button from "@/components/ui/Button";
 import ImageGallery from "./ImageGallery";
+import AddToCartButton from "@/components/product/AddToCartButton";
 
 type ProductDetailProps = {
   product: Product;
@@ -80,17 +80,7 @@ export default function ProductDetail({ product, imageUrl }: ProductDetailProps)
 
           {/* CTA */}
           <div className="mt-4">
-            <Button
-              variant="primary"
-              size="lg"
-              className="w-full"
-              disabled={isSoldOut}
-            >
-              {isSoldOut ? "품절" : "장바구니 담기"}
-            </Button>
-            <p className="text-xs text-[#9CA3AF] text-center mt-2">
-              * 장바구니 기능은 Phase 3에서 추가될 예정입니다
-            </p>
+            <AddToCartButton product={product} />
           </div>
         </div>
       </div>
