@@ -1,10 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-const DEMO_USERS = [
-  { id: "1", name: "컬렉터", email: "user@figure.shop", password: "figure123" },
-  { id: "2", name: "관리자", email: "admin@figure.shop", password: "admin123" },
-];
+import { findUserByCredentials } from "./user-store";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,9 +12,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
-        const user = DEMO_USERS.find(
-          (u) => u.email === credentials.email && u.password === credentials.password
-        );
+        const user = findUserByCredentials(credentials.email, credentials.password);
         return user ?? null;
       },
     }),
