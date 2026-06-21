@@ -8,12 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)", "var(--font-noto)", "sans-serif"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        accent: "#E63946",
+        card: "#F8F8F8",
+        muted: "#9CA3AF",
+        border: "#E5E7EB",
       },
     },
   },
   plugins: [],
 };
+
 export default config;
