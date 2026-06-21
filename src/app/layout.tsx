@@ -3,6 +3,7 @@ import { Inter, Noto_Sans_KR, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import AuthProvider from "@/components/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const notoSansKR = Noto_Sans_KR({
@@ -29,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${inter.variable} ${notoSansKR.variable} ${spaceGrotesk.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

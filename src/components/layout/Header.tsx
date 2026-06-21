@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search, Menu, X } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Header() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +46,18 @@ export default function Header() {
           <Link href="/products?category=anime" className="hover:text-[#1A1A1A] transition-colors">애니</Link>
           <Link href="/products?category=game" className="hover:text-[#1A1A1A] transition-colors">게임</Link>
           <Link href="/products?category=movie" className="hover:text-[#1A1A1A] transition-colors">영화</Link>
+          {session ? (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="text-[#E63946] hover:text-[#1A1A1A] transition-colors text-sm"
+            >
+              로그아웃
+            </button>
+          ) : (
+            <Link href="/login" className="px-3 py-1.5 bg-[#1A1A1A] text-white text-xs rounded hover:bg-[#E63946] transition-colors">
+              로그인
+            </Link>
+          )}
         </nav>
 
         <button
@@ -75,6 +89,13 @@ export default function Header() {
           <Link href="/products?category=anime" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">애니메이션</Link>
           <Link href="/products?category=game" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">게임</Link>
           <Link href="/products?category=movie" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">영화</Link>
+          {session ? (
+            <button onClick={() => signOut({ callbackUrl: "/" })} className="text-[#E63946] text-left text-sm">
+              로그아웃
+            </button>
+          ) : (
+            <Link href="/login" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">로그인</Link>
+          )}
         </div>
       )}
     </header>
