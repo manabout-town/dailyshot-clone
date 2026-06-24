@@ -1,8 +1,18 @@
 # FigureShop
 
-피규어 컬렉터를 위한 전문 e-커머스 플랫폼. [dailyshot.co](https://dailyshot.co) 클론 프로젝트.
+> 피규어 컬렉터를 위한 전문 e-커머스 플랫폼
 
-**Live →** *(Vercel 배포 예정)*
+[![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://typescriptlang.org)
+[![Supabase](https://img.shields.io/badge/Supabase-2-3ECF8E?logo=supabase)](https://supabase.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12-FF0055?logo=framer)](https://framer.com/motion)
+
+---
+
+## 개요
+
+FigureShop은 [dailyshot.co](https://dailyshot.co) 아키텍처를 참고해 구축한 피규어 전문 e-커머스 플랫폼이다. 브랜드 랜딩부터 상품 카탈로그, 장바구니, 결제까지 쇼핑 전 과정을 구현하며, 컬렉터의 선반을 연상시키는 웜 오프화이트 디자인 시스템이 특징이다.
 
 ---
 
@@ -11,111 +21,106 @@
 | 분류 | 기술 |
 |------|------|
 | Framework | Next.js 14 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS |
-| Animation | Framer Motion |
-| Auth | NextAuth.js (Credentials) |
-| State | Zustand (장바구니 persist) |
-| Font | Space Grotesk + Inter + Noto Sans KR |
-| Image | next/image + picsum.photos |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 3 |
+| Animation | Framer Motion 12 |
+| Auth | NextAuth.js v4 (Credentials Provider) |
+| State | Zustand 5 (persist 미들웨어) |
+| Database | Supabase 2 |
+| Test | Vitest 4 |
+| Font | Space Grotesk · Inter · Noto Sans KR |
 
 ---
 
 ## 주요 기능
 
 ### 인트로 → 쇼핑몰 플로우
+
 - `/` → `/intro` 브랜드 랜딩 (다크 테마, 스크롤 애니메이션)
-- "쇼핑 시작하기" → `/shop` 메인 마켓
+- "쇼핑 시작하기" CTA → `/shop` 메인 마켓으로 진입
 
 ### 인증
+
 - 회원가입 / 로그인 / 로그아웃 (NextAuth.js Credentials)
 - 데모 계정: `user@figure.shop` / `figure123`
 
-### 쇼핑 카탈로그
-- 상품 목록 — 카테고리 · 브랜드 · 스케일 필터 + 정렬
-- 상품 상세 — 이미지 갤러리, 스펙표, 연관상품
-- 검색 — 한글/영문 상품명, 브랜드, 시리즈 전체 검색
+### 상품 카탈로그
+
+- 상품 목록 — 카테고리 · 브랜드 · 스케일 복합 필터 + 정렬
+- 상품 상세 페이지 — 이미지 갤러리, 스펙표, 연관상품
+- 전체 검색 — 한글/영문 상품명, 브랜드, 시리즈 동시 검색
 
 ### 장바구니 & 결제
-- Zustand persist 장바구니 (새로고침 후에도 유지)
-- 수량 조절 / 삭제
-- Mock 결제 폼 (배송정보 + 카드정보, 토스페이 UI 스타일)
+
+- Zustand persist 장바구니 (세션 초기화 후에도 유지)
+- 수량 조절 / 항목 삭제 / 전체 초기화
+- Mock 결제 폼 — 배송정보 + 카드정보 (토스페이 UI 스타일)
 
 ### 디자인 시스템
-- **시그니처:** 히어로 `1/7` 아키텍처 타이포 (Space Grotesk)
-- 웜 오프화이트 팔레트 `#F7F6F3` — 컬렉터의 선반 느낌
-- 레드 액센트 `#E63946`
-- 카드 hover → ring 테두리 + scale 이미지 확대
+
+- **시그니처 타이포**: 히어로에 `1/7` 아키텍처 레이아웃, Space Grotesk
+- **팔레트**: 웜 오프화이트 `#F7F6F3` (컬렉터의 선반) · 레드 액센트 `#E63946`
+- **카드 인터랙션**: hover → ring 테두리 + scale 이미지 확대
 
 ---
 
-## 라우팅 구조
+## 디렉터리 구조
 
 ```
-/                   → /intro (리다이렉트)
-/intro              브랜드 인트로 랜딩
-/shop               메인 (추천상품 + 카테고리)
-/products           전체 상품 목록 (필터/정렬)
-/products/[id]      상품 상세
-/search?q=          검색 결과
-/cart               장바구니
-/checkout           결제
-/checkout/success   주문 완료
-/login              로그인
-/register           회원가입
+src/
+├── app/
+│   ├── (main)/         # 메인 쇼핑몰 라우트 그룹
+│   ├── intro/          # 브랜드 랜딩 페이지
+│   ├── api/            # NextAuth, 상품 API Route
+│   └── layout.tsx
+├── components/         # 재사용 컴포넌트
+├── lib/                # Supabase 클라이언트, 유틸리티
+└── types/              # TypeScript 타입 정의
 ```
 
 ---
 
-## 로컬 실행
+## 로컬 개발 환경 설정
+
+### 요구 사항
+
+- Node.js 18+
+- npm 또는 pnpm
+
+### 설치
 
 ```bash
+git clone https://github.com/manabout-town/dailyshot-clone.git
+cd dailyshot-clone
 npm install
+```
 
-# 환경변수
-echo "NEXTAUTH_SECRET=$(openssl rand -hex 32)" >> .env.local
-echo "NEXTAUTH_URL=http://localhost:3000" >> .env.local
+### 환경 변수 설정
 
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+NEXTAUTH_SECRET=your_secret
+NEXTAUTH_URL=http://localhost:3000
+```
+
+### 개발 서버 실행
+
+```bash
 npm run dev
 ```
 
 → http://localhost:3000
 
----
+### 테스트
 
-## 데이터 구조
-
-Supabase 없이 **정적 TypeScript 파일**로 구현. DB 없이 즉시 실행 가능.
-
-```
-src/lib/data/
-├── brands.ts      브랜드 5개 (굿스마일, 반다이, 코토부키야, 맥스팩토리, 알터)
-├── categories.ts  카테고리 4개 (애니, 게임, 스포츠, 영화)
-├── series.ts      시리즈 4개
-└── products.ts    상품 20개 (picsum.photos 이미지)
-```
-
-SQL 스키마 참조: [`supabase/schema.sql`](./supabase/schema.sql) · [`supabase/seed.sql`](./supabase/seed.sql)
-
----
-
-## Phase 로드맵
-
-- [x] **Phase 1+2** — 프로젝트 셋업, 정적 데이터, 카탈로그 (목록/상세/검색)
-- [x] **Phase 2.5** — Auth(NextAuth), 장바구니(Zustand), Mock 결제, 인트로 페이지
-- [ ] **Phase 3** — 토스페이먼츠 실결제 연동
-- [ ] **Phase 4** — 관리자 대시보드, 재고 관리
-- [ ] **Phase 5** — Supabase 전환, 실사용 데이터
-
----
-
-## 환경변수
-
-```env
-NEXTAUTH_SECRET=   # openssl rand -hex 32
-NEXTAUTH_URL=http://localhost:3000
+```bash
+npm test          # 단발 실행
+npm run test:watch  # 감시 모드
 ```
 
 ---
 
-Made with ☕ — [manabout-town](https://github.com/manabout-town)
+## 라이선스
+
+MIT
