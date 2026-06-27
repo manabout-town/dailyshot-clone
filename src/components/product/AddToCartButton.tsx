@@ -7,22 +7,27 @@ import { useState } from "react";
 
 type Props = {
   product: Product;
+  quantity?: number;
 };
 
-export default function AddToCartButton({ product }: Props) {
+export default function AddToCartButton({ product, quantity = 1 }: Props) {
   const addItem = useCartStore((s) => s.addItem);
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
-    addItem({
-      id: product.id,
-      name: product.name,
-      name_ko: product.name_ko,
-      price: product.price,
-      brand_ko: product.brand?.name_ko ?? null,
-      scale: product.scale,
-      image_url: product.image_url ?? null,
-    });
+    addItem(
+      {
+        id: product.id,
+        name: product.name,
+        name_ko: product.name_ko,
+        price: product.price,
+        brand_ko: product.brand?.name_ko ?? null,
+        scale: product.scale,
+        image_url: product.image_url ?? null,
+        stock: product.stock,
+      },
+      quantity
+    );
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };

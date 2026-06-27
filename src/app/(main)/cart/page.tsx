@@ -5,15 +5,20 @@ import { formatKRW } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, total, clearCart } = useCartStore();
+  const { items, removeItem, updateQuantity, total } = useCartStore();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   if (items.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 flex flex-col items-center gap-4 text-[#888]">
         <p className="text-lg font-medium">장바구니가 비어있습니다</p>
-        <Link href="/products" className="text-sm text-[#1A1A1A] underline hover:text-[#E63946]">
+        <Link href="/shop" className="text-sm text-[#1A1A1A] underline hover:text-[#E63946]">
           상품 보러 가기 →
         </Link>
       </div>
@@ -40,7 +45,10 @@ export default function CartPage() {
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-bold uppercase tracking-widest text-[#888]">{item.brand_ko}</p>
               <p className="text-sm font-medium text-[#1A1A1A] mt-0.5 line-clamp-1">{item.name_ko ?? item.name}</p>
-              <p className="text-sm font-bold tabular-nums mt-1">₩{formatKRW(item.price)}</p>
+              <p className="text-sm text-[#888] tabular-nums mt-1">₩{formatKRW(item.price)}</p>
+              {item.quantity > 1 && (
+                <p className="text-sm font-bold tabular-nums text-[#E63946]">= ₩{formatKRW(item.price * item.quantity)}</p>
+              )}
             </div>
 
             <div className="flex flex-col items-end gap-2 shrink-0">
@@ -48,14 +56,17 @@ export default function CartPage() {
                 <Trash2 size={14} />
               </button>
               <div className="flex items-center gap-2 border border-[#E0DDD6] rounded px-2 py-1">
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-[#888] hover:text-[#1A1A1A]">
+                <button onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} className="text-[#888] hover:text-[#1A1A1A] disabled:opacity-30">
                   <Minus size={12} />
                 </button>
                 <span className="text-sm font-medium w-4 text-center">{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-[#888] hover:text-[#1A1A1A]">
+                <button onClick={() => updateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= item.stock} className="text-[#888] hover:text-[#1A1A1A] disabled:opacity-30">
                   <Plus size={12} />
                 </button>
               </div>
+              {item.quantity >= item.stock && (
+                <span className="text-[10px] text-[#E63946]">최대</span>
+              )}
             </div>
           </div>
         ))}

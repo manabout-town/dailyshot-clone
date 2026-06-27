@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatKRW(amount: number): string {
-  return amount.toLocaleString("ko-KR");
+  return (amount ?? 0).toLocaleString("ko-KR");
 }
 
 export function getDiscountRate(price: number, originalPrice: number): number {

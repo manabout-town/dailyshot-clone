@@ -7,6 +7,18 @@ import { Search, Menu, X } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import CartIcon from "@/components/cart/CartIcon";
 
+function UserAvatar({ name }: { name: string | null | undefined }) {
+  const initial = name ? name.charAt(0).toUpperCase() : "U";
+  return (
+    <div
+      className="w-7 h-7 rounded-full bg-[#E63946] flex items-center justify-center text-white text-xs font-bold shrink-0 select-none"
+      aria-label={name ?? "사용자"}
+    >
+      {initial}
+    </div>
+  );
+}
+
 export default function Header() {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -49,12 +61,17 @@ export default function Header() {
           <Link href="/products?category=movie" className="hover:text-[#1A1A1A] transition-colors">영화</Link>
           <CartIcon />
           {session ? (
-            <button
-              onClick={() => signOut({ callbackUrl: "/shop" })}
-              className="text-[#E63946] hover:text-[#1A1A1A] transition-colors text-sm"
-            >
-              로그아웃
-            </button>
+            <div className="flex items-center gap-2">
+              <Link href="/mypage">
+                <UserAvatar name={session.user?.name} />
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/shop" })}
+                className="text-[#E63946] hover:text-[#1A1A1A] transition-colors text-sm"
+              >
+                로그아웃
+              </button>
+            </div>
           ) : (
             <Link href="/login" className="px-3 py-1.5 bg-[#1A1A1A] text-white text-xs rounded hover:bg-[#E63946] transition-colors">
               로그인
@@ -95,9 +112,15 @@ export default function Header() {
           <Link href="/products?category=game" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">게임</Link>
           <Link href="/products?category=movie" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">영화</Link>
           {session ? (
-            <button onClick={() => signOut({ callbackUrl: "/shop" })} className="text-[#E63946] text-left text-sm">
-              로그아웃
-            </button>
+            <div className="flex items-center gap-3">
+              <Link href="/mypage" onClick={() => setMenuOpen(false)}>
+                <UserAvatar name={session.user?.name} />
+              </Link>
+              <Link href="/mypage" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A] text-sm">마이페이지</Link>
+              <button onClick={() => signOut({ callbackUrl: "/shop" })} className="text-[#E63946] text-left text-sm">
+                로그아웃
+              </button>
+            </div>
           ) : (
             <Link href="/login" onClick={() => setMenuOpen(false)} className="text-[#1A1A1A]">로그인</Link>
           )}

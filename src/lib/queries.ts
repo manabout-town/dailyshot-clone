@@ -14,7 +14,8 @@ export function getProducts(filters: ProductFilters = {}): { data: Product[]; co
   if (brand) items = items.filter((p) => p.brand?.name_ko === brand || p.brand?.name === brand);
   if (scale) items = items.filter((p) => p.scale === scale);
 
-  if (sort === "price_asc") items = [...items].sort((a, b) => a.price - b.price);
+  if (sort === "newest") items = [...items].sort((a, b) => (b.release_date ?? "").localeCompare(a.release_date ?? ""));
+  else if (sort === "price_asc") items = [...items].sort((a, b) => a.price - b.price);
   else if (sort === "price_desc") items = [...items].sort((a, b) => b.price - a.price);
 
   const count = items.length;

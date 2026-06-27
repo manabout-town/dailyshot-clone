@@ -5,6 +5,7 @@ import ProductGrid from "@/components/product/ProductGrid";
 import ProductFiltersPanel from "@/components/product/ProductFilters";
 import FilterChips from "@/components/product/FilterChips";
 import { ProductCardSkeleton } from "@/components/ui/Skeleton";
+import MobileFilterButton from "@/components/product/MobileFilterButton";
 
 type Props = {
   searchParams: Record<string, string | string[] | undefined>;
@@ -26,13 +27,19 @@ export default function ProductsPage({ searchParams }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">전체 상품</h1>
-        <p className="text-sm text-[#9CA3AF] mt-1">{count}개 상품</p>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">전체 상품</h1>
+          <p className="text-sm text-[#9CA3AF] mt-1">{count}개 상품</p>
+        </div>
+        {/* Mobile filter button - visible only on small screens */}
+        <Suspense>
+          <MobileFilterButton categories={categories} brands={brands} />
+        </Suspense>
       </div>
 
       <div className="flex gap-8">
-        {/* Sidebar filters — desktop only */}
+        {/* Sidebar filters - desktop only */}
         <aside className="hidden lg:block w-52 shrink-0">
           <Suspense>
             <ProductFiltersPanel categories={categories} brands={brands} />
