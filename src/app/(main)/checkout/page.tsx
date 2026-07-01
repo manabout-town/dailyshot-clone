@@ -6,12 +6,14 @@ import { useOrderStore } from "@/lib/order-store";
 import { formatKRW } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCartStore();
   const { balance, usePoints, earnPoints } = usePointStore();
   const { addOrder } = useOrderStore();
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -31,10 +33,13 @@ export default function CheckoutPage() {
   const finalTotal = Math.max(0, orderTotal - appliedPoints);
   const needsCard = finalTotal > 0;
 
-  // Redirect client-side only — router.push during SSR throws ReferenceError (no window.location)
   useEffect(() => {
-    if (items.length === 0) router.push("/cart");
-  }, [items.length, router]);
+    if (status === "unauthenticated") router.push("/login?callbackUrl=/checkout");
+  }, [status, router]);
+
+  useEffect(() => {
+    if (mounted && !loading && items.length === 0) router.push("/cart");
+  }, [mounted, loading, items.length, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -79,7 +84,7 @@ export default function CheckoutPage() {
     router.push("/checkout/success");
   };
 
-  if (!mounted) return null;
+  if (!mounted || status === "loading" || status === "unauthenticated") return null;
   if (items.length === 0) return null;
 
   return (
